@@ -16,7 +16,7 @@ Start the development server:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser on your machine, locally hosted.
 
 ## How to Use
 
