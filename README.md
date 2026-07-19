@@ -24,6 +24,8 @@ Type a Pokemon name (e.g. `pikachu`, `charizard`) or a Pokédex number (e.g. `25
 
 The card will show the Pokemon's official artwork, type badges, height, weight, and base stats.
 
+If the pokemon doesn't exist it just errors out, could be extended in the future to find the closest.
+
 ## Tech Stack
 
 Next.js 15, React 19, Tailwind CSS, shadcn/ui, PokéAPI
