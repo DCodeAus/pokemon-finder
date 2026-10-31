@@ -28,4 +28,4 @@ If the pokemon doesn't exist it just errors out, could be extended in the future
 
 ## Tech Stack
 
-Next.js 15, React 19, Tailwind CSS, shadcn/ui, PokéAPI
+Next.js 16, React 19, Tailwind CSS 4, PokéAPI
