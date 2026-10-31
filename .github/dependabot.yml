@@ -14,3 +14,16 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    # Hold these at their current major version. The Next.js lint plugins
+    # don't support ESLint 10 or TypeScript 7 yet, and @types/node should
+    # match the Node.js version the app runs on (24, as Vercel uses) rather
+    # than the newest one. Only major-version upgrades are held back -
+    # minor and patch updates (where security fixes usually land) still
+    # come through. Remove a line once Next.js supports the newer version.
+    ignore:
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
