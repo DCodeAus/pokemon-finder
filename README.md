@@ -24,7 +24,15 @@ Type a Pokemon name (e.g. `pikachu`, `charizard`) or a Pokédex number (e.g. `25
 
 The card will show the Pokemon's official artwork, type badges, height, weight, and base stats.
 
-If the pokemon doesn't exist it just errors out, could be extended in the future to find the closest.
+Names work however you type them - "Mr. Mime", "Farfetch'd" and "ho oh" all find the right Pokemon. If nothing matches, it suggests the closest names (search "charizrd" and it offers Charizard) - click one to see it.
+
+## Putting it online
+
+The easiest free host for a Next.js app is [Vercel](https://vercel.com) (made by the people behind Next.js):
+
+1. Sign in at vercel.com with your GitHub account.
+2. **Add New → Project**, pick this repository and click **Deploy** - no settings to change.
+3. Every push to `main` updates the live site automatically.
 
 ## Tech Stack
 

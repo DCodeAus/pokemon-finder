@@ -2,26 +2,31 @@
 
 import { useState } from "react";
 import { PokemonCard, type PokemonData } from "@/components/pokemon-card";
+import { suggestNames, toApiName } from "@/lib/suggest";
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  async function search(e: React.FormEvent) {
-    e.preventDefault();
-    const name = query.trim().toLowerCase();
+  async function lookUp(typed: string) {
+    const name = toApiName(typed);
     if (!name) return;
 
     setLoading(true);
     setError(null);
+    setSuggestions([]);
     setPokemon(null);
 
     try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(name)}`);
       if (!res.ok) {
-        setError(`No Pokemon found for "${query}"`);
+        setError(`No Pokemon found for "${typed.trim()}"`);
+        // Not found - offer the closest names instead. If the list can't
+        // be fetched, the plain "not found" message is enough.
+        setSuggestions(await suggestNames(name).catch(() => []));
         return;
       }
       const data: PokemonData = await res.json();
@@ -31,6 +36,16 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function search(e: React.FormEvent) {
+    e.preventDefault();
+    lookUp(query);
+  }
+
+  function pickSuggestion(name: string) {
+    setQuery(name);
+    lookUp(name);
   }
 
   return (
@@ -60,7 +75,24 @@ export default function Home() {
       </form>
 
       {error && (
-        <p className="text-destructive text-sm">{error}</p>
+        <div className="text-center space-y-3">
+          <p className="text-destructive text-sm">{error}</p>
+          {suggestions.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
+              <span className="text-muted-foreground">Did you mean</span>
+              {suggestions.map((name) => (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => pickSuggestion(name)}
+                  className="rounded-full border border-border px-3 py-1 capitalize hover:bg-muted transition-colors"
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       {pokemon && <PokemonCard pokemon={pokemon} />}
