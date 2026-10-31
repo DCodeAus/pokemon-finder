@@ -1,0 +1,16 @@
+# Dependabot checks npm every week and opens a pull request when a package
+# has a newer version. Small (minor/patch) updates come together in one pull
+# request to keep the noise down; a major version gets its own, since those
+# can need code changes. Nothing changes until a pull request is merged.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
